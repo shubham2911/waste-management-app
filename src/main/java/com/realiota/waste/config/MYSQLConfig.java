@@ -98,8 +98,7 @@ public class MYSQLConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.rivigo.collections.entity.hibernate",
-                "com.rivigo.collections.entity.mysql","com.rivigo.finance.entity.mysql");
+        factory.setPackagesToScan("com.realiota.waste.entity.mysql");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
 

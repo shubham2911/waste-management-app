@@ -8,16 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-    String name;
+public class LoginDTO {
     Long phoneNumber;
-    UserType userType;
-    BigDecimal greenMoneyBalance;
+    String password;
 }

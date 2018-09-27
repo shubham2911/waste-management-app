@@ -8,16 +8,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-    String name;
-    Long phoneNumber;
-    UserType userType;
-    BigDecimal greenMoneyBalance;
+public class CouponDTO {
+    Long validFrom;
+    Long validTo;
+    String title;
+    String description;
+    Long usedCount;
+    Long maxCount;
 }
