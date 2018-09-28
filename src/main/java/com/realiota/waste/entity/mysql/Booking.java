@@ -1,8 +1,10 @@
 package com.realiota.waste.entity.mysql;
 
 import com.realiota.waste.entity.mysql.base.BaseEntity;
+import com.realiota.waste.enums.BookingPeriod;
+import com.realiota.waste.enums.BookingStatus;
+import com.realiota.waste.enums.BookingType;
 import com.realiota.waste.enums.TransactionType;
-import com.realiota.waste.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,26 +26,28 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class Transaction extends BaseEntity {
+@Table(name = "booking")
+public class Booking extends BaseEntity {
+
+    @Column(name = "booking_number")
+    private String bookingNumber;
 
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "transaction_type")
+    @Column(name = "booking_type")
     @Enumerated(EnumType.STRING)
-    private TransactionType transactionType;
+    private BookingType bookingType;
 
-    @Column(name = "remarks")
-    private String remarks;
+    @Column(name = "booking_period")
+    @Enumerated(EnumType.STRING)
+    private BookingPeriod bookingPeriod;
 
-    @Column(name = "opening_balance")
-    private BigDecimal opening_balance;
+    @Column(name = "starting_date")
+    private Long startingDate;
 
-    @Column(name = "amount")
-    private BigDecimal amount;
-
-    @Column(name = "closing_balance")
-    private BigDecimal closing_balance;
+    @Column(name = "bookings_status")
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
 
 }

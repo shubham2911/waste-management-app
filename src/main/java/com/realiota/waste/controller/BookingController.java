@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class WasteController {
+public class BookingController {
 
     @RequestMapping(value = "/booking/initiate", method = RequestMethod.POST)
     public Response<BookingDTO> initiateBooking(@RequestBody BookingDTO bookingDTO) {

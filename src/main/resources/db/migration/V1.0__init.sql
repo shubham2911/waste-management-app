@@ -5,7 +5,7 @@ CREATE TABLE user
     `phone_number` bigint(15) NOT NULL,
     `password` varchar(128) NOT NULL,
     `user_type` varchar(32) NOT NULL,
-    `green_money_balance` decimal(16,9) DEFAULT '0.000000000' NOT NULL,
+    `green_money_balance` decimal(19,4) DEFAULT '0.000000000' NOT NULL,
     `is_active` bit(1) NOT NULL DEFAULT b'1',
     `record_version_number` int(4) DEFAULT NULL,
     `created_timestamp` bigint(15) DEFAULT NULL,
@@ -48,3 +48,19 @@ CREATE TABLE user_coupon_mapping
     `updated_timestamp` bigint(15) DEFAULT NULL
 );
 CREATE UNIQUE INDEX user_coupon_mapping_redemption_code_uindex ON user_coupon_mapping (redemption_code);
+
+
+CREATE TABLE transaction
+(
+    `id` bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user_id bigint NOT NULL,
+    transaction_type varchar(32) NOT NULL,
+    remarks text,
+    opening_balance decimal(19,4) NOT NULL,
+    amount decimal(19,4) NOT NULL,
+    closing_balance decimal(19,4) NOT NULL,
+    `is_active` bit(1) NOT NULL DEFAULT b'1',
+    `record_version_number` int(4) DEFAULT NULL,
+    `created_timestamp` bigint(15) DEFAULT NULL,
+    `updated_timestamp` bigint(15) DEFAULT NULL
+);

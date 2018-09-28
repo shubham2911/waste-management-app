@@ -30,7 +30,7 @@ public class WasteCollectionExceptionHandler extends ResponseEntityExceptionHand
             WasteManagementException = (WasteManagementException) ex;
             return new ResponseEntity<>(
                     buildResponse(WasteManagementException.getAppErrorCode(), WasteManagementException.getAppErrorMessage()),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.OK);
         }
         return new ResponseEntity<>(buildResponse(500, "Something went wrong"),
                 HttpStatus.INTERNAL_SERVER_ERROR);

@@ -4,11 +4,13 @@ import com.realiota.waste.dto.CouponDTO;
 import com.realiota.waste.entity.mysql.Coupon;
 import com.realiota.waste.entity.mysql.User;
 import com.realiota.waste.entity.mysql.UserCouponMapping;
+import com.realiota.waste.enums.TransactionType;
 import com.realiota.waste.enums.UserType;
 import com.realiota.waste.exception.WasteManagementException;
 import com.realiota.waste.repository.mysql.CouponRepository;
 import com.realiota.waste.repository.mysql.UserCouponMappingRepository;
 import com.realiota.waste.service.CouponService;
+import com.realiota.waste.service.TransactionService;
 import com.realiota.waste.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +30,7 @@ import java.util.UUID;
 public class CouponServiceImpl implements CouponService {
 
     private static final int REDEMPTION_CODE_STRING_LENGTH = 5;
+    private static final BigDecimal DEFAULT_REDEMPTION_AMOUNT = new BigDecimal(5);
 
     @Autowired
     private CouponRepository couponRepository;
@@ -36,6 +40,9 @@ public class CouponServiceImpl implements CouponService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Override
     @Transactional
@@ -56,7 +63,7 @@ public class CouponServiceImpl implements CouponService {
             User issuedByUser = userService.getByUserId(coupon.getIssuedByUserId());
             List<UserCouponMapping> userCouponMappings = userCouponMappingRepository.findByUserIdAndCouponId(user.getId(), coupon.getId());
             String redemptionCode = null;
-            if(!CollectionUtils.isEmpty(userCouponMappings)) {
+            if (!CollectionUtils.isEmpty(userCouponMappings)) {
                 redemptionCode = userCouponMappings.get(0).getRedemptionCode();
             }
             CouponDTO couponDTO = convertToCouponDTO(coupon, issuedByUser, redemptionCode);
@@ -109,7 +116,7 @@ public class CouponServiceImpl implements CouponService {
     @Override
     @Transactional
     public CouponDTO redeemCoupon(Long phoneNumber, Long couponId) {
-        Coupon coupon  = findById(couponId);
+        Coupon coupon = findById(couponId);
         User user = userService.getByPhoneNumber(phoneNumber);
         validateRedeemCouponRequeest(coupon, user);
         UserCouponMapping userCouponMapping = new UserCouponMapping();
@@ -119,6 +126,8 @@ public class CouponServiceImpl implements CouponService {
         coupon.setUsedCount(coupon.getUsedCount() + 1);
         userCouponMappingRepository.save(userCouponMapping);
         couponRepository.save(coupon);
+        transactionService.createTransaction(coupon.getIssuedByUserId(), DEFAULT_REDEMPTION_AMOUNT, TransactionType.CREDIT,
+                "\'" + coupon.getTitle() + "\' redemption by \'" + user.getName() + "\', redemption code : " + userCouponMapping.getRedemptionCode());
         return convertToCouponDTO(coupon, user, userCouponMapping.getRedemptionCode());
     }
 
@@ -147,7 +156,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     private void validateRedeemCouponRequeest(Coupon coupon, User user) {
-        if(!UserType.HOUSEHOLD.equals(user.getUserType())) {
+        if (!UserType.HOUSEHOLD.equals(user.getUserType())) {
             throw new WasteManagementException("Only household users can redeem coupons");
         }
         if (coupon.getUsedCount().equals(coupon.getMaxCount())) {
@@ -158,7 +167,7 @@ public class CouponServiceImpl implements CouponService {
             throw new WasteManagementException("Redemption Time does not match current time");
         }
         List<UserCouponMapping> userCouponMappings = userCouponMappingRepository.findByUserIdAndCouponId(user.getId(), coupon.getId());
-        if(!CollectionUtils.isEmpty(userCouponMappings)) {
+        if (!CollectionUtils.isEmpty(userCouponMappings)) {
             throw new WasteManagementException("Can redeem a coupon only once");
         }
     }

@@ -16,14 +16,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CouponDTO {
-    Long id;
-    String redemptionCode;
-    String createdBy;
-    Long userPhoneNumber;
-    Long validFrom;
-    Long validTo;
-    String title;
-    String description;
-    Long usedCount;
-    Long maxCount;
+    private Long id;
+    private String redemptionCode;
+    private String createdBy;
+    private Long userPhoneNumber;
+    private Long validFrom;
+    private Long validTo;
+    private String title;
+    private String description;
+    private Long usedCount;
+    private Long maxCount;
 }

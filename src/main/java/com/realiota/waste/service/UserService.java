@@ -4,6 +4,8 @@ import com.realiota.waste.dto.LoginDTO;
 import com.realiota.waste.dto.UserDTO;
 import com.realiota.waste.entity.mysql.User;
 
+import java.math.BigDecimal;
+
 public interface UserService {
 
     User getByPhoneNumber(Long phoneNumber);
@@ -13,4 +15,6 @@ public interface UserService {
     UserDTO loginUser(LoginDTO loginDTO);
 
     UserDTO convert(User user);
+
+    BigDecimal getBalance(Long phoneNumber);
 }
