@@ -8,6 +8,8 @@ public interface UserService {
 
     User getByPhoneNumber(Long phoneNumber);
 
+    User getByUserId(Long userId);
+
     UserDTO loginUser(LoginDTO loginDTO);
 
     UserDTO convert(User user);

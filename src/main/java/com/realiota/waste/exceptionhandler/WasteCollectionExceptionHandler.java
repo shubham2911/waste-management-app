@@ -2,7 +2,7 @@ package com.realiota.waste.exceptionhandler;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.realiota.waste.dto.Response;
-import com.realiota.waste.exception.WasteCollectionException;
+import com.realiota.waste.exception.WasteManagementException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
@@ -20,16 +20,16 @@ import javax.persistence.PersistenceException;
 @ControllerAdvice
 public class WasteCollectionExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {WasteCollectionException.class})
+    @ExceptionHandler(value = {WasteManagementException.class})
     protected ResponseEntity<Response> handleWasteCollectionException(RuntimeException ex,
                                                                       WebRequest request) {
-        log.error("WasteCollectionException occoured - {}", ExceptionUtils.getFullStackTrace(ex));
+        log.error("WasteManagementException occoured - {}", ExceptionUtils.getFullStackTrace(ex));
 
-        WasteCollectionException WasteCollectionException;
-        if (ex instanceof WasteCollectionException) {
-            WasteCollectionException = (WasteCollectionException) ex;
+        WasteManagementException WasteManagementException;
+        if (ex instanceof WasteManagementException) {
+            WasteManagementException = (WasteManagementException) ex;
             return new ResponseEntity<>(
-                    buildResponse(WasteCollectionException.getAppErrorCode(), WasteCollectionException.getAppErrorMessage()),
+                    buildResponse(WasteManagementException.getAppErrorCode(), WasteManagementException.getAppErrorMessage()),
                     HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(buildResponse(500, "Something went wrong"),
