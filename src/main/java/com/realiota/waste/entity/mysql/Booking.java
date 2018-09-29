@@ -46,6 +46,15 @@ public class Booking extends BaseEntity {
     @Column(name = "starting_date")
     private Long startingDate;
 
+    @Column(name = "amount")
+    private BigDecimal amount;
+
+    @Column(name = "green_money_amount")
+    private BigDecimal greenMoneyAmount;
+
+    @Column(name = "payment_amount")
+    private BigDecimal paymentAmount;
+
     @Column(name = "bookings_status")
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;

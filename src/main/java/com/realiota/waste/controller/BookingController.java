@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/booking")
 public class BookingController {
 
-    @RequestMapping(value = "/booking/initiate", method = RequestMethod.POST)
+    @RequestMapping(value = "/initiate", method = RequestMethod.POST)
     public Response<BookingDTO> initiateBooking(@RequestBody BookingDTO bookingDTO) {
         return null;
     }
 
-    @RequestMapping(value = "/booking/complete", method = RequestMethod.GET)
+    @RequestMapping(value = "/complete", method = RequestMethod.GET)
     public Response<BookingDTO> completeBooking(@RequestBody BookingDTO bookingDTO) {
         return null;
     }

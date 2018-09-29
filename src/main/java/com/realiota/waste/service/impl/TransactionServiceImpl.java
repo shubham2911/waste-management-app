@@ -36,9 +36,11 @@ public class TransactionServiceImpl implements TransactionService {
         switch (transactionType) {
             case DEBIT:
                 closingBalance = openingBalance.subtract(amount);
+                user.setGreenMoneyBalance(user.getGreenMoneyBalance().subtract(amount));
                 break;
             case CREDIT:
                 closingBalance = openingBalance.add(amount);
+                user.setGreenMoneyBalance(user.getGreenMoneyBalance().add(amount));
                 break;
         }
         Transaction transaction = new Transaction();

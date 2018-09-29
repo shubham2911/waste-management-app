@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionDTO extends BaseEntity {
+public class TransactionDTO {
 
     private TransactionType transactionType;
     private String remarks;

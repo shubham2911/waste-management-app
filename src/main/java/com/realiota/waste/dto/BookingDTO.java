@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Builder
@@ -22,4 +24,7 @@ public class BookingDTO {
     BookingPeriod bookingPeriod;
     Long startingDate;
     BookingStatus bookingStatus;
+    BigDecimal amount;
+    BigDecimal greenMoneyAmount;
+    BigDecimal paymentAmount;
 }

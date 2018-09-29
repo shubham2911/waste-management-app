@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
-@RestController("/user")
+@RestController
+@RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired

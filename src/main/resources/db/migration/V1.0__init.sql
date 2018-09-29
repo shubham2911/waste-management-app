@@ -53,14 +53,28 @@ CREATE UNIQUE INDEX user_coupon_mapping_redemption_code_uindex ON user_coupon_ma
 CREATE TABLE transaction
 (
     `id` bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    user_id bigint NOT NULL,
-    transaction_type varchar(32) NOT NULL,
-    remarks text,
-    opening_balance decimal(19,4) NOT NULL,
-    amount decimal(19,4) NOT NULL,
-    closing_balance decimal(19,4) NOT NULL,
+    `user_id` bigint NOT NULL,
+    `transaction_type` varchar(32) NOT NULL,
+    `remarks` text,
+    `opening_balance` decimal(19,4) NOT NULL,
+    `amount` decimal(19,4) NOT NULL,
+    `closing_balance` decimal(19,4) NOT NULL,
     `is_active` bit(1) NOT NULL DEFAULT b'1',
     `record_version_number` int(4) DEFAULT NULL,
     `created_timestamp` bigint(15) DEFAULT NULL,
     `updated_timestamp` bigint(15) DEFAULT NULL
 );
+
+CREATE TABLE booking
+(
+    booking_number varchar(32) NOT NULL,
+    user_id bigint NOT NULL,
+    booking_type varchar(32) NOT NULL,
+    booking_period varchar(32) NOT NULL,
+    starting_date bigint NOT NULL,
+    amount decimal(19,4) NOT NULL,
+    green_money_amount decimal(19,4),
+    payment_amount decimal(19,4) NOT NULL,
+    booking_status varchar(32) NOT NULL
+);
+CREATE UNIQUE INDEX booking_booking_number_uindex ON booking (booking_number);
